@@ -15,8 +15,12 @@ module ActiveAdmin
       private
 
       def build_filters
-        @params[:q] ||= []
-        @params[:q].map { |param| Humanized.new(param) }
+        if params = @params[:q]
+          params = params.to_unsafe_h if params.respond_to?(:to_unsafe_h)
+          params.map { |param| Humanized.new(param) }
+        else
+          []
+        end
       end
 
       def humanize_scope
