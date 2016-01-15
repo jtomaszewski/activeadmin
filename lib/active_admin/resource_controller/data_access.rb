@@ -227,6 +227,7 @@ module ActiveAdmin
       end
 
       def clean_search_params(params)
+        params = params.to_unsafe_h if params.respond_to?(:to_unsafe_h)
         if params.is_a? Hash
           params.dup.delete_if{ |key, value| value.blank? }
         else
